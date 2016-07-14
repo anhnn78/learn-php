@@ -1,0 +1,6 @@
+﻿"C:\xampp\htdocs\my_portfolio":{
+        "url_testing":"http://localhost:8888/my_portfolio"
+    }
+
+C:\xampp\htdocs\my_portfolio -> Đường dẫn tuyệt đối tới thư mục
+http://localhost:8888/my_portfolio -> đường link ở trình duyệt
