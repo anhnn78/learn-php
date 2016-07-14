@@ -1,11 +1,11 @@
 <?php
-	$dsn="mysql:host=localhost;dbname=user.db";
+	$dsn="mysql:host=localhost;dbname=user";
 	$user ="root";
 	$pass ="";
 
 	try{
 		$db = new PDO($dsn,$user,$pass);
-		echo "Connected"
+			
 
 	}catch(PDOExeption $e){
 		$errors=$e->getMessage();

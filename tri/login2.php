@@ -1,20 +1,18 @@
 <?php
-	if (isset[$_POST['login']]){
-		$user;
-		$pass;
-		$user= $_POST['name'];
-		$pass= $_POST['pass'];
-		require "check.php";
-		$query ="SELECT * FROM username WHERE username=$user";
-		$user=$db->query($query);
-		if($user){
-			if($user['pass']=$pass){
-				$_SESSION['user']='name';
-				header('location:this is virus.txt');
-			}
-
-		}else{
-			$error="Login Error ! :(";
+	session_start();
+	$user;$pass;$error;
+	if (isset($_POST['login'])) {
+		$user = $_POST['username'];
+		$pass = $_POST['password'];
+		require 'check.php';
+		$query = 'SELECT * FROM user WHERE username=:name';
+		$records=$db->prepare($query);
+		$records->bindParam(':name',$user);
+		$records->execute();
+		$user = $records->fetch(PDO::FETCH_ASSOC);
+		if(count($user)>0 and $user['pass']==$pass){
+			echo $user['rank'];	
+			echo"thanh ocng";
 		}
 	}
 ?>
@@ -46,13 +44,18 @@ input[type=reset]:hover,input[type=submit]:hover{border: 1px solid #1892bf;}
 	</style>
 </head>
 <body>
+	<?php 
+		if (isset($error)) {
+			echo $error;
+		}
+	?>
 	<form id="formthisday"  method="POST">
 						<fieldset>
 							<div class="control-form">
 								<label for="name">
 									<span>Tên đăng nhập :</span>
 								</label>							
-								<input type="text" id="name" name="name" placeholder="Nhập tên đăng nhập" require>
+								<input type="text" name="username" placeholder="Nhập tên đăng nhập" >
 								
 							</div>
 
@@ -60,7 +63,7 @@ input[type=reset]:hover,input[type=submit]:hover{border: 1px solid #1892bf;}
 								<label for="pass">
 									<span>Mật khẩu :</span>
 								</label>						
-								<input type="password" id="password" name="pass" placeholder="Nhập mật khẩu" require>					
+								<input type="password" name="password" placeholder="Nhập mật khẩu" >					
 							</div>
 						</fieldset>
 						<fieldset id="submit">					
