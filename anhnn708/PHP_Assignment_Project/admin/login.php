@@ -1,6 +1,25 @@
 <?php
 session_start();
-$name; $pass; $error;
+$user; $pass; $error;
+
+if (isset($_POST['submit'])) {
+  $user = $_POST['username'];
+  $pass = $_POST['password'];
+
+  require 'database.php';
+
+  $query = "SELECT * FROM user WHERE username = :name";
+  $records = $db->prepare($query);
+  $records->bindParam(':name', $user);
+  $records->execute();
+
+  $user = $records->fetch(PDO::FETCH_ASSOC);
+
+  if (count($user)>0 and $user['password'] == $pass) {
+    echo $user['email'];
+  }
+}
+
 ?>
 
 <!DOCTYPE html>
