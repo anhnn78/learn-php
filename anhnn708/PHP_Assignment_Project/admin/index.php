@@ -1,8 +1,20 @@
+<?php
+require_once '../account/check_user.php';
+require_once '../includes/database.php';
+
+$user_info = $db->prepare('SELECT * FROM user WHERE user_name = :username');
+$user_info->bindParam(':username', $_SESSION['user']['name']);
+$user_info->execute();
+
+$user_info = $user_info->fetch(PDO::FETCH_ASSOC);
+
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
 
 <head>
-    <title>Quản trị tin tức</title>
+    <title>Quản trị</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,12 +22,12 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
     <!-- CSS Libs -->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="css/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="../publics/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../publics/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../publics/css/animate.min.css">
     <!-- CSS App -->
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/flat-blue.css">
+    <link rel="stylesheet" type="text/css" href="../publics/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../publics/css/flat-blue.css">
 </head>
 
 <body class="flat-blue">
@@ -39,18 +51,15 @@
                             <i class="fa fa-times icon"></i>
                         </button>
                         <li class="dropdown profile">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Ngo Ngoc Anh <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo $user_info['user_name'] ?><span class="caret"></span></a>
                             <ul class="dropdown-menu animated fadeInDown">
-                                <li class="profile-img">
-                                    <img src="images/profile/anhnn.jpg" class="profile-img">
-                                </li>
                                 <li>
                                     <div class="profile-info">
                                         <h4 class="username">Ngo Ngoc Anh</h4>
                                         <p>anhnnph04548@fpt.edu.vn</p>
                                         <div class="btn-group margin-bottom-2x" role="group">
-                                            <button type="button" class="btn btn-default"><i class="fa fa-user"></i> Thông tin</button>
-                                            <button type="button" class="btn btn-default"><i class="fa fa-sign-out"></i> Thoát</button>
+                                            <a href="#" class="btn btn-default"><i class="fa fa-user"></i> Thông tin</a>
+                                            <a href="../account/logout.php" class="btn btn-default"><i class="fa fa-sign-out"></i> Thoát</a>
                                         </div>
                                     </div>
                                 </li>
@@ -63,7 +72,7 @@
                 <nav class="navbar navbar-default" role="navigation">
                     <div class="side-menu-container">
                         <div class="navbar-header">
-                            <a class="navbar-brand" href="#">
+                            <a class="navbar-brand" href="../index.php">
                                 <div class="icon fa fa-paper-plane"></div>
                                 <div class="title">Tinmoi.com</div>
                             </a>
@@ -86,7 +95,7 @@
                                 <div id="dropdown-table" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="#">Tất cả bài viết</a>
+                                            <li><a href="#">Quản lý bài viết</a>
                                             </li>
                                             <li><a href="#">Viết bài mới</a>
                                             </li>
@@ -213,16 +222,16 @@
         </footer>
         <div>
             <!-- Javascript Libs -->
-            <script type="text/javascript" src="js/jquery.min.js"></script>
-            <script type="text/javascript" src="js/bootstrap.min.js"></script>
-            <script type="text/javascript" src="js/Chart.min.js"></script>
-            <script type="text/javascript" src="js/bootstrap-switch.min.js"></script>
-            <script type="text/javascript" src="js/jquery.matchHeight-min.js"></script>
-            <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
-            <script type="text/javascript" src="js/select2.full.min.js"></script>
+            <script type="text/javascript" src="../publics/js/jquery.min.js"></script>
+            <script type="text/javascript" src="../publics/js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="../publics/js/Chart.min.js"></script>
+            <script type="text/javascript" src="../publics/js/bootstrap-switch.min.js"></script>
+            <script type="text/javascript" src="../publics/js/jquery.matchHeight-min.js"></script>
+            <script type="text/javascript" src="../publics/js/jquery.dataTables.min.js"></script>
+            <script type="text/javascript" src="../publics/js/select2.full.min.js"></script>
             <!-- Javascript -->
-            <script type="text/javascript" src="js/app.js"></script>
-            <script type="text/javascript" src="js/index.js"></script>
+            <script type="text/javascript" src="../publics/js/app.js"></script>
+            <script type="text/javascript" src="../publics/js/index.js"></script>
 </body>
 
 </html>

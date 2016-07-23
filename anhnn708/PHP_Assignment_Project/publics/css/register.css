@@ -1,0 +1,32 @@
+#main {
+	padding-top: 120px;
+}
+.alert {
+	margin-top: 5px;
+	border-radius: 0!important;
+	padding: 7px !important;
+	margin-bottom: 0!important;
+}
+#submit-register {
+	width: 100%;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+legend {
+	padding-bottom: 7px;
+	font-weight: bold;
+	color: #555;
+	font-size: 1.5em;
+}
+small {
+	font-weight: normal;
+	font-style: italic;
+	font-size: 70%;
+}
+form {
+	font-size: 1.2em;
+	margin: 0 auto;
+}
+input, .btn {
+	border-radius: 0!important;
+}

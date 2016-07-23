@@ -1,22 +1,40 @@
 <?php
 session_start();
-$user; $pass; $error;
+//Check if user logged in or not
+if (isset($_SESSION['user'])) {
+  header('location: ..');
+}
+
+$name; $pass; $error;
 
 if (isset($_POST['submit'])) {
-  $user = $_POST['username'];
+  $name = $_POST['username'];
   $pass = $_POST['password'];
 
-  require 'database.php';
+  require_once '../includes/database.php';
 
-  $query = "SELECT * FROM user WHERE username = :name";
+  $query = "SELECT * FROM user WHERE user_name = :name";
+
   $records = $db->prepare($query);
-  $records->bindParam(':name', $user);
+  $records->bindParam(':name', $name);
   $records->execute();
 
   $user = $records->fetch(PDO::FETCH_ASSOC);
 
-  if (count($user)>0 and $user['password'] == $pass) {
-    echo $user['email'];
+  if (count($user)>0 and password_verify($_POST['password'], $user['password'])) {
+    #login successfully
+    $_SESSION['user']['name'] = $user['user_name'];
+    $_SESSION['user']['role'] = $user['role'];
+
+    //Action:
+    if ($_SESSION['user']['role'] < 3) {
+      header('location: ../admin');
+      exit();
+    }
+    header('location: ..');
+    exit();
+  } else {
+    $error = 'Tài khoản hoặc mật khẩu sai!';
   }
 }
 
@@ -32,10 +50,10 @@ if (isset($_POST['submit'])) {
     <title>Đăng nhập</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../publics/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/login.css" rel="stylesheet">
+    <link href="../publics/css/login.css" rel="stylesheet">
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -49,23 +67,29 @@ if (isset($_POST['submit'])) {
      <div class="container">
       <?php if (isset($error)): ?>
         <div class="alert alert-danger error">
-          <strong>Lỗi!</strong> <?php echo $error; ?>.
+          <strong>Lỗi!</strong> <?php echo $error ?>
         </div>
       <?php endif ?>
+      
 
       <form class="form-signin" method="post">
 
         <h2 class="form-signin-heading">Đăng nhập hệ thống</h2>
         <div class="form-group">
-          <input type="text" class="form-control" id="username" name="username" placeholder="Username" minlength="6" maxlength="20" autofocus required>
+          <input type="text" class="form-control" id="username" name="username" placeholder="Username" autofocus required value="<?php if (isset($_POST['username'])) {
+            echo $_POST['username'];
+          } ?>">
         </div>
         <div class="form-group">
-          <input type="password" class="form-control" id="password" name="password" placeholder="Password" minlength="6" maxlength="20" required>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
         </div>
         <div class="checkbox">
           <label>
             <input type="checkbox" name="remember"> Ghi nhớ
           </label>
+        </div>
+        <div class="form-group">
+          Chưa có tài khoản? <a href="register.php"><strong>Đăng ký ngay.</strong></a>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Đăng nhập</button>
       </form>
@@ -76,8 +100,8 @@ if (isset($_POST['submit'])) {
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/admin.js"></script>
+    <script src="../publics/js/jquery.min.js"></script>
+    <script src="../publics/js/bootstrap.min.js"></script>
+    <script src="../publics/js/admin.js"></script>
   </body>
 </html>
