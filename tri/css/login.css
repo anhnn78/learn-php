@@ -1,0 +1,19 @@
+*{padding:0px;margin:0px;transition-duration:0.4s;}
+fieldset{padding:20px;width:500px;margin:0 auto;margin-top:100px;border-radius:10px;border:1px solid #1892bf;background:#1892bf;
+-webkit-box-shadow: 10px 11px 20px -5px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 11px 20px -5px rgba(0,0,0,0.75);
+box-shadow: 10px 11px 20px -5px rgba(0,0,0,0.75);}
+fieldset:hover{opacity:0.95;}
+	input{float:left;border-radius:10px;background:#e7e8ea;border:black 1px solid;font-family:Tahoma;}
+	input[type=text],input[type=password]{width:190px;height:30px;padding:5px 5px 5px 20px;}
+	input[type=submit]{cursor:pointer;width:160px;height:50px;margin-left:170px;font-size:13pt;}
+	input[type=submit]:hover{cursor:pointer;color:#e7e8ea;background:#1892bf;border:1px solid #ffffff;}
+	input[type=text]:hover,input[type=password]:hover{border:1px solid #ffffff;background:#1892bf;color:#e7e8ea;}
+#error{padding:20px 40px 20px 40px;border:1px solid #e7e8ea;background:#1892bf;border-radius:8px;font-family:Tahoma;font-size:12pt;color:#e7e8ea; margin:270px;}
+body{background:#4aaece;margin:0 auto;width:980px;height:auto;}
+	label{display:block-inline;width:120px;height:40px;float:left;line-height:30px;margin:10px;font-family:Tahoma;font-size:12pt;color:#e7e8ea;}
+		#canvass{width:300px;height:400px;}
+		::-webkit-input-placeholder{color:  #adadad;}
+		:-moz-placeholder {color: #adadad;}
+		::-moz-placeholder {color:  #adadad;}
+		:-ms-input-placeholder {color:  #adadad;}
