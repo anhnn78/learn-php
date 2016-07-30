@@ -1,7 +1,7 @@
 <?php 
   session_start();
 
-  $message = array('username', 'password', 'email');
+  $message = array();
 
   if (isset($_POST['register'])) {
     $username = $_POST['username'];
@@ -27,7 +27,7 @@
 
       $query = "SELECT * FROM user WHERE user_name = :username";
       $user = $db->prepare($query);
-      $user->bindParam(':username', $_POST['username']);
+      $user->bindValue(':username', $_POST['username']);
 
       $user->execute();
 
@@ -38,7 +38,7 @@
       } else {
         $query = "SELECT * FROM user WHERE email = :email";
         $user = $db->prepare($query);
-        $user->bindParam(':email', $_POST['email']);
+        $user->bindValue(':email', $email);
 
         $user->execute();
 
@@ -59,6 +59,7 @@
           $add_user->execute();
 
           //Set session and redirect
+          unset($_SESSION['user']);
           $_SESSION['user']['name'] = $_POST['username'];
           $_SESSION['user']['role'] = 3;
 

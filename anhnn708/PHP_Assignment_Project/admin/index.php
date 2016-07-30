@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../account/check_user.php';
 require_once '../includes/database.php';
 
@@ -22,7 +23,8 @@ $user_info = $user_info->fetch(PDO::FETCH_ASSOC);
     <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
     <!-- CSS Libs -->
-    <link rel="stylesheet" type="text/css" href="../publics/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
     <link rel="stylesheet" type="text/css" href="../publics/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="../publics/css/animate.min.css">
     <!-- CSS App -->
@@ -40,7 +42,7 @@ $user_info = $user_info->fetch(PDO::FETCH_ASSOC);
                             <i class="fa fa-bars icon"></i>
                         </button>
                         <ol class="breadcrumb navbar-breadcrumb">
-                            <li class="active">Tổng quan</li>
+                            <li class="active">Quản lý</li>
                         </ol>
                         <button type="button" class="navbar-right-expand-toggle pull-right visible-xs">
                             <i class="fa fa-th icon"></i>
@@ -55,10 +57,10 @@ $user_info = $user_info->fetch(PDO::FETCH_ASSOC);
                             <ul class="dropdown-menu animated fadeInDown">
                                 <li>
                                     <div class="profile-info">
-                                        <h4 class="username">Ngo Ngoc Anh</h4>
-                                        <p>anhnnph04548@fpt.edu.vn</p>
+                                        <h4 class="username"><?php echo $user_info['user_name'] ?></h4>
+                                        <p><?php echo $user_info['email'] ?></p>
                                         <div class="btn-group margin-bottom-2x" role="group">
-                                            <a href="#" class="btn btn-default"><i class="fa fa-user"></i> Thông tin</a>
+                                            <!--<a href="#" class="btn btn-default"><i class="fa fa-user"></i> Thông tin</a>-->
                                             <a href="../account/logout.php" class="btn btn-default"><i class="fa fa-sign-out"></i> Thoát</a>
                                         </div>
                                     </div>
@@ -73,7 +75,7 @@ $user_info = $user_info->fetch(PDO::FETCH_ASSOC);
                     <div class="side-menu-container">
                         <div class="navbar-header">
                             <a class="navbar-brand" href="../index.php">
-                                <div class="icon fa fa-paper-plane"></div>
+                                <div class="icon fa fa-newspaper-o"></div>
                                 <div class="title">Tinmoi.com</div>
                             </a>
                             <button type="button" class="navbar-expand-toggle pull-right visible-xs">
@@ -82,7 +84,7 @@ $user_info = $user_info->fetch(PDO::FETCH_ASSOC);
                         </div>
                         <ul class="nav navbar-nav">
                             <li class="active">
-                                <a href="index.html">
+                                <a href=".">
                                     <span class="icon fa fa-tachometer"></span><span class="title">Tổng quan</span>
                                 </a>
                             </li>
@@ -95,16 +97,16 @@ $user_info = $user_info->fetch(PDO::FETCH_ASSOC);
                                 <div id="dropdown-table" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="#">Quản lý bài viết</a>
+                                            <li><a href="article">Quản lý bài viết</a>
                                             </li>
-                                            <li><a href="#">Viết bài mới</a>
+                                            <li><a href="article/add.php">Viết bài mới</a>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="category">
                                     <span class="icon glyphicon glyphicon-list"></span><span class="title">Chuyên mục</span>
                                 </a>
                             </li>
@@ -113,11 +115,13 @@ $user_info = $user_info->fetch(PDO::FETCH_ASSOC);
                                     <span class="icon glyphicon glyphicon-comment"></span><span class="title">Phản hồi</span>
                                 </a>
                             </li>
+                        <?php if ($user_info['role'] == 1): ?>
                             <li>
-                                <a href="#">
+                                <a href="user">
                                     <span class="icon fa fa-users"></span><span class="title">Thành viên</span>
                                 </a>
                             </li>
+                        <?php endif ?>
                         </ul>
                     </div>
                     <!-- /.navbar-collapse -->
@@ -126,92 +130,7 @@ $user_info = $user_info->fetch(PDO::FETCH_ASSOC);
             <!-- Main Content -->
             <div class="container-fluid">
                 <div class="side-body padding-top">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                            <a href="#">
-                                <div class="card red summary-inline">
-                                    <div class="card-body">
-                                        <i class="icon fa fa-envelope fa-4x"></i>
-                                        <div class="content">
-                                            <div class="title">5</div>
-                                            <div class="sub-title">Phản hồi</div>
-                                        </div>
-                                        <div class="clear-both"></div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                            <a href="#">
-                                <div class="card yellow summary-inline">
-                                    <div class="card-body">
-                                        <i class="icon fa fa-comments fa-4x"></i>
-                                        <div class="content">
-                                            <div class="title">23</div>
-                                            <div class="sub-title">Bình luận</div>
-                                        </div>
-                                        <div class="clear-both"></div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                            <a href="#">
-                                <div class="card green summary-inline">
-                                    <div class="card-body">
-                                        <i class="icon fa fa-eye fa-4x"></i>
-                                        <div class="content">
-                                            <div class="title">280</div>
-                                            <div class="sub-title">Lượt xem</div>
-                                        </div>
-                                        <div class="clear-both"></div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                            <a href="#">
-                                <div class="card blue summary-inline">
-                                    <div class="card-body">
-                                        <i class="icon fa fa-share-alt fa-4x"></i>
-                                        <div class="content">
-                                            <div class="title">16</div>
-                                            <div class="sub-title">Lượt chia sẻ</div>
-                                        </div>
-                                        <div class="clear-both"></div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="row  no-margin-bottom">
-                        <div class="col-xs-12">
-                            <div class="row">
-                                <div class="col-md-6 col-sm-12">
-                                    <div class="card primary">
-                                        <div class="card-jumbotron no-padding">
-                                            <canvas id="jumbotron-bar-chart" class="chart no-padding"></canvas>
-                                        </div>
-                                        <div class="card-body half-padding">
-                                            <h4 class="float-left no-margin font-weight-300">Lượt bình luận</h4>
-                                            <div class="clear-both"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-sm-12">
-                                    <div class="card primary">
-                                        <div class="card-jumbotron no-padding">
-                                            <canvas id="jumbotron-line-2-chart" class="chart no-padding"></canvas>
-                                        </div>
-                                        <div class="card-body half-padding">
-                                            <h4 class="float-left no-margin font-weight-300">Lượt xem trang</h4>
-                                            <div class="clear-both"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php require_once 'view/dashboard.php'; ?>               
                 </div>
             </div>
         </div>
@@ -220,7 +139,6 @@ $user_info = $user_info->fetch(PDO::FETCH_ASSOC);
                 © 2016 Copyright.
             </div>
         </footer>
-        <div>
             <!-- Javascript Libs -->
             <script type="text/javascript" src="../publics/js/jquery.min.js"></script>
             <script type="text/javascript" src="../publics/js/bootstrap.min.js"></script>
@@ -232,6 +150,7 @@ $user_info = $user_info->fetch(PDO::FETCH_ASSOC);
             <!-- Javascript -->
             <script type="text/javascript" src="../publics/js/app.js"></script>
             <script type="text/javascript" src="../publics/js/index.js"></script>
+                
 </body>
 
 </html>

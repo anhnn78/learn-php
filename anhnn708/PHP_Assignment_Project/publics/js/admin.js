@@ -4,3 +4,6 @@ window.setTimeout(function() {
         $(this).remove(); 
     });
 }, 2000);
+
+// Tooltips (on share buttons when hovering)
+ $('[data-toggle="tooltip"]').tooltip(); 

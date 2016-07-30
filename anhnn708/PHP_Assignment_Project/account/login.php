@@ -1,7 +1,7 @@
 <?php
 session_start();
 //Check if user logged in or not
-if (isset($_SESSION['user'])) {
+if (isset($_SESSION['user']['role']) and $_SESSION['user']['role'] != 0) {
   header('location: ..');
 }
 
@@ -27,12 +27,14 @@ if (isset($_POST['submit'])) {
     $_SESSION['user']['role'] = $user['role'];
 
     //Action:
-    if ($_SESSION['user']['role'] < 3) {
+    if ($_SESSION['user']['role'] == 0) {
+      session_destroy();
+      $error = "Tài khoản tạm thời bị khóa.";
+    } elseif ($_SESSION['user']['role'] < 3) {
       header('location: ../admin');
       exit();
-    }
-    header('location: ..');
-    exit();
+    } else {header('location: ..');}
+    
   } else {
     $error = 'Tài khoản hoặc mật khẩu sai!';
   }
